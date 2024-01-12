@@ -7,6 +7,7 @@ those particular pagination parameters """
 import csv
 import math
 from typing import List
+index_range = __import__("0-simple_helper_function.py").index_range
 
 
 class Server:
@@ -35,10 +36,3 @@ class Server:
         start, end = index_range(page, page_size)
         res = self.dataset()
         return res[start:end]
-
-
-def index_range(page, page_size):
-    """helper function"""
-    start = (page - 1) * page_size
-    end = page * page_size
-    return start, end
