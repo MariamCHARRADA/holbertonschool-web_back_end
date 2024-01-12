@@ -33,6 +33,6 @@ class Server:
         value 1 and page_size with default value 10"""
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
-        start, end = index_range(page, page_size)
+        start_index, end_index = index_range(page, page_size)
         res = self.dataset()
-        return res[start:end]
+        return res[start_index:end_index]
