@@ -1,14 +1,9 @@
+import listOfStudents from "./9-hoisting.js";
 
-import Building from './5-building.js';
+console.log(listOfStudents);
 
-const b = new Building(100);
-console.log(b);
+const listPrinted = listOfStudents.map(
+    student => student.fullStudentDescription
+);
 
-class TestBuilding extends Building {}
-
-try {
-    new TestBuilding(200)
-}
-catch(err) {
-    console.log(err);
-}
+console.log(listPrinted)
