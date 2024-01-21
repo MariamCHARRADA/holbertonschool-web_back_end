@@ -1,5 +1,4 @@
-import Currency from './3-currency';
-import { displayFullCurrency } from './3-currency';
+import currency from './3-currency';
 
 export default class Pricing {
   constructor(amount, currency) {
