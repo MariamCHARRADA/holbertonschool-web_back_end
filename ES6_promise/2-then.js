@@ -8,6 +8,6 @@ export default function handleResponseFromAPI(promise) {
       };
     })
     .catch(() => {
-       new Error();
+      return new Error();
     });
 }
