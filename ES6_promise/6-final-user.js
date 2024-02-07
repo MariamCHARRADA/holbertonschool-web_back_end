@@ -6,15 +6,15 @@ export default async function handleProfileSignup(
   lastName,
   fileName
 ) {
-  const user = {
+  const user = [{
     status: 'fulfilled',
     value: await signUpUser(firstName, lastName).catch((error) =>
       error.toString()
     ),
-  };
-  const photo = {
+  }];
+  const photo = [{
     status: 'fulfilled',
     value: await uploadPhoto(fileName).catch((error) => error.toString()),
-  };
+  }];
   return [user, photo];
 }
