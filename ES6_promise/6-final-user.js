@@ -8,8 +8,7 @@ export default async function handleProfileSignup(
 ) {
   const user = {
     status: 'fulfilled',
-    value: await signUpUser(firstName, lastName)
-  
+    value: await signUpUser(firstName, lastName),
   };
   const photo = {
     status: 'rejected',
