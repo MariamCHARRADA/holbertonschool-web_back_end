@@ -7,7 +7,7 @@ import logging
 
 
 class RedactingFormatter(logging.Formatter):
-    """Redacting Formatter class that inherits from built-in (parent class) logging.Formatter"""
+    """class that inherits from built-in logging.Formatter"""
 
     REDACTION = "***"
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
