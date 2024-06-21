@@ -1,9 +1,19 @@
 #!/usr/bin/env python3
 """ function called filter_datum that returns the log message obfuscated"""
 
+import logging
+import mysql.connector
+import os
 import re
 from typing import List
-import logging
+
+PII_FIELDS = (
+    "name",
+    "email",
+    "phone",
+    "ssn",
+    "password",
+)
 
 
 class RedactingFormatter(logging.Formatter):
@@ -35,3 +45,15 @@ def filter_datum(
         replacement = f"{field}={redaction}"
         message = re.sub(pattern, replacement, message)
     return message
+
+
+def get_logger() -> logging.Logger:
+    """logger function"""
+    logger = logging.getLogger("user_data")
+    logger.setLevel(logging.INFO)
+    logger.propagate = False
+    handler = logging.StreamHandler()
+    formatter = RedactingFormatter(PII_FIELDS)
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    return logger
