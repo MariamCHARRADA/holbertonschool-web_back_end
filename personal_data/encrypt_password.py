@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """ function that encrypts passwords"""
 
-from bcrypt import hashpw, gensalt
-
+import bcrypt
 
 def hash_password(password: str) -> bytes:
     """encrypts a password"""
-    return hashpw(password.encode(), gensalt())
+    return bcrypt.hashpw(password.encode(), bcrypt.gensalt())
