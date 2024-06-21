@@ -22,7 +22,7 @@ class RedactingFormatter(logging.Formatter):
         """formats records and filters sensitive info"""
         record.msg = filter_datum(
             self.fields, self.REDACTION, record.msg, self.SEPARATOR)
-        return super(RedactingFormatter, self).format(record)
+        return super().format(record)
 
 
 def filter_datum(
