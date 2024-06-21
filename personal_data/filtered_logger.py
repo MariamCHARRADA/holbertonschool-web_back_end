@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" function called filter_datum that returns the log message obfuscated"""
+"""filtered logger"""
 
 import logging
 import mysql.connector
@@ -83,10 +83,13 @@ def main() -> None:
     logger = get_logger()
 
     for row in cursor.fetchall():
-        message = f"name={row[0]}; email={row[1]}; phone={row[2]}; ssn={row[3]}; password={row[4]}; ip={row[5]}; last_login={row[6]}; user_agent={row[7]};"
+        message = f"name={row[0]}; email={row[1]}; phone={row[2]};" \
+            f"ssn={row[3]}; password={row[4]}; ip={row[5]};" \
+                f"last_login={row[6]}; user_agent={row[7]};"
         logger.info(message)
 
     cursor.close()
     db.close()
+
     if __name__ == "__main__":
         main()
