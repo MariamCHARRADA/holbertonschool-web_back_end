@@ -40,7 +40,7 @@ def forbidden(error) -> str:
 
 
 @app.before_request
-def before_request() -> None:
+def before_request() -> str:
     """before_request handler"""
     if auth is None:
         return
