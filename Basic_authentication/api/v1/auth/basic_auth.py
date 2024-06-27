@@ -48,4 +48,3 @@ class BasicAuth(Auth):
         else:
             [email, password] = decoded_base64_authorization_header.split(":")
             return (email, password)
-
