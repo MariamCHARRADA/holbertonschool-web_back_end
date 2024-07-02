@@ -68,6 +68,6 @@ class SessionAuth(Auth):
         try:
             del self.user_by_session_id[session_id]
         except Exception:
-            pass
+            return False
 
         return True
