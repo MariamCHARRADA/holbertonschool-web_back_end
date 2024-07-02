@@ -7,8 +7,7 @@ from models.user import User
 from os import getenv
 
 
-@app_views.route("/auth_session/login",
-                 methods=["POST"], strict_slashes=False)
+@app_views.route("/auth_session/login", methods=["POST"], strict_slashes=False)
 def login():
     """returns logged user"""
     from api.v1.app import auth
@@ -37,3 +36,18 @@ def login():
     response.set_cookie(SESSION_NAME, session_id)
 
     return response
+
+
+@app_views.route("/auth_session/logout",
+                 methods=["DELETE"],
+                 strict_slashes=False)
+def logout():
+    """logout user"""
+    from api.v1.app import auth
+
+    deleted = auth.destroy_session(request)
+
+    if not deleted:
+        abort(404)
+
+    return jsonify({}), 200
