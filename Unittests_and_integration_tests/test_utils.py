@@ -52,7 +52,7 @@ class TestGetJson(unittest.TestCase):
             mock_get.return_value = mock_response
 
 
-class TestMemoize(unittest.TestCase):
+class TestMemoize(TestCase):
     """Class for testing memoize"""
 
     def test_memoize(self):
