@@ -8,61 +8,69 @@ from unittest.mock import patch, Mock
 
 
 class TestAccessNestedMap(unittest.TestCase):
-    """ testing nested map"""
-    @parameterized.expand([
-        ({"a": 1}, ("a",), 1),
-        ({"a": {"b": 2}}, ("a",), {"b": 2}),
-        ({"a": {"b": 2}}, ("a", "b"), 2),
-    ])
+    """testing nested map"""
+
+    @parameterized.expand(
+        [
+            ({"a": 1}, ("a",), 1),
+            ({"a": {"b": 2}}, ("a",), {"b": 2}),
+            ({"a": {"b": 2}}, ("a", "b"), 2),
+        ]
+    )
     def test_access_nested_map(self, map, path, expected):
-        """ test method"""
+        """test method"""
         output = access_nested_map(map, path)
         self.assertEqual(output, expected)
 
-    @parameterized.expand([
-        ({}, ("a",), 'a'),
-        ({"a": 1}, ("a", "b"), 'b'),
-    ])
+    @parameterized.expand(
+        [
+            ({}, ("a",), "a"),
+            ({"a": 1}, ("a", "b"), "b"),
+        ]
+    )
     def test_access_nested_map_exception(self, map, path, wrong):
-        """ test that a KeyError is raised for the following inputs"""
+        """test that a KeyError is raised for the following inputs"""
         with self.assertRaises(KeyError) as e:
             access_nested_map(map, path)
             self.assertEqual(wrong, e.exception)
 
 
 class TestGetJson(unittest.TestCase):
-    """ TestGetJson class"""
-    @parameterized.expand([
-        ("http://example.com", {"payload": True}),
-        ("http://holberton.io", {"payload": False}),
-    ])
+    """TestGetJson class"""
+
+    @parameterized.expand(
+        [
+            ("http://example.com", {"payload": True}),
+            ("http://holberton.io", {"payload": False}),
+        ]
+    )
     def test_get_json(self, test_url, test_payload):
-        """ Test get_json returns the expected result """
-        with patch('utils.requests.get') as mock_get:
+        """Test get_json returns the expected result"""
+        with patch("utils.requests.get") as mock_get:
             mock_response = Mock()
             mock_response.json.return_value = test_payload
             mock_get.return_value = mock_response
 
 
 class TestMemoize(unittest.TestCase):
-    """ Class for testing memoize """
+    """Class for testing memoize"""
 
     def test_memoize(self):
-        """ Test memoize """
+        """Test memoize"""
 
         class TestClass:
-            """ test class"""
+            """test class"""
 
             def a_method(self):
-                """ returns 42"""
+                """returns 42"""
                 return 42
 
             @memoize
             def a_property(self):
-                """ returns memoized """
+                """returns memoized"""
                 return self.a_method()
 
-        with patch.object(TestClass, 'a_method', return_value=42) as mock_method:
+        with patch.object(TestClass, "a_method", return_value=42) as mock_method:
             test_instance = TestClass()
 
             result1 = test_instance.a_property
