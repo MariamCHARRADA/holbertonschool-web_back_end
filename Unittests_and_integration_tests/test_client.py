@@ -2,9 +2,10 @@
 """Parameterize and patch as decorators """
 
 import unittest
-from parameterized import parameterized
+from parameterized import parameterized, parameterized_class
 from utils import access_nested_map, memoize
 from unittest.mock import patch, Mock, PropertyMock
+from fixtures import org_payload, repos_payload, expected_repos, apache2_repos
 from unittest import mock, TestCase
 from client import GithubOrgClient
 
