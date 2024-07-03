@@ -5,6 +5,7 @@ import unittest
 from parameterized import parameterized
 from utils import access_nested_map, memoize
 from unittest.mock import patch, Mock
+from unittest import mock, TestCase
 
 
 class TestAccessNestedMap(unittest.TestCase):
