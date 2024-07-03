@@ -11,13 +11,16 @@ from client import GithubOrgClient
 
 class TestGithubOrgClient(TestCase):
     """class for testing GithubOrgClient"""
-    @parameterized.expand([
-        ("google", {"login": "google", "id": 1}),
-        ("abc", {"login": "abc", "id": 2})
-    ])
-    @patch('client.GithubOrgClient.get_json')
+
+    @parameterized.expand([("google",
+                            {"login": "google",
+                             "id": 1}),
+                           ("abc",
+                            {"login": "abc",
+                             "id": 2})])
+    @patch("client.GithubOrgClient.get_json")
     def test_org(self, org_name, expected_value, mock_get_json):
-        """ test GithubOrgClient"""
+        """test GithubOrgClient"""
         mock_get_json.return_value = expected_value
         client = GithubOrgClient(org_name)
         result = client.org
