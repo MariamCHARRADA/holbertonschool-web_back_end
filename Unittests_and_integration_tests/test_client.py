@@ -12,9 +12,12 @@ from client import GithubOrgClient
 class TestGithubOrgClient(TestCase):
     """class for testing GithubOrgClient"""
 
-    @parameterized.expand(
-        [("google", {"login": "google", "id": 1}), ("abc", {"login": "abc", "id": 2})]
-    )
+    @parameterized.expand([("google",
+                            {"login": "google",
+                             "id": 1}),
+                           ("abc",
+                            {"login": "abc",
+                             "id": 2})])
     @patch("client.GithubOrgClient.get_json")
     def test_org(self, org_name, expected_value, mock_get_json):
         """test GithubOrgClient"""
@@ -22,9 +25,11 @@ class TestGithubOrgClient(TestCase):
         client = GithubOrgClient(org_name)
         result = client.org
 
-        mock_get_json.assert_called_once_with(f"https://api.github.com/orgs/{org_name}")
+        mock_get_json.assert_called_once_with(
+            f"https://api.github.com/orgs/{org_name}")
         self.assertEqual(result, expected_value)
 
+    @patch("client.GithubOrgClient.org", new_callable=PropertyMock)
     def test_public_repos_url(self, mock_org):
         """test public_repos_url"""
         mock_org.return_value = {
@@ -45,11 +50,14 @@ class TestGithubOrgClient(TestCase):
 
         with patch(
             to_mock,
-            PropertyMock(return_value="https://api.github.com/orgs/test_org/repos"),
+            new_callable=PropertyMock,
+            return_value="https://api.github.com/orgs/test_org/repos",
         ) as mock_public_repos_url:
             client = GithubOrgClient("test_org")
 
-            self.assertEqual(client.public_repos(), ["Repo1", "Repo2", "Repo3"])
+            self.assertEqual(
+                client.public_repos(), [
+                    "Repo1", "Repo2", "Repo3"])
 
             self.assertEqual(client.public_repos("license1"), ["Repo1"])
             self.assertEqual(client.public_repos("license3"), [])
