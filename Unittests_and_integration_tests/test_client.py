@@ -69,7 +69,6 @@ class TestGithubOrgClient(TestCase):
             )
             mock_public_repos_url.assert_called_once_with()
 
-
     @patch("client.GithubOrgClient.get_json")
     @parameterized.expand([
         ({"license": {"key": "my_license"}}, "my_license", True),
@@ -80,3 +79,49 @@ class TestGithubOrgClient(TestCase):
         result = GithubOrgClient.has_license(repo, license_key)
 
         self.assertEqual(result, expected)
+
+
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """Integration tests for GithubOrgClient."""
+
+    @classmethod
+    def setUpClass(cls):
+        """Set up class method to mock requests.get with example payloads."""
+        cls.get_patcher = patch('requests.get')
+        cls.mock_get = cls.get_patcher.start()
+
+        def side_effect(url):
+            """Side effect function to mock requests.get(url).json()."""
+            if url == 'https://api.github.com/orgs/testorg':
+                return Mock(json=lambda: org_payload)
+            elif url == 'https://api.github.com/orgs/testorg/repos':
+                return Mock(json=lambda: repos_payload)
+            else:
+                raise ValueError(f"Unexpected URL: {url}")
+
+        cls.mock_get.side_effect = side_effect
+
+    @classmethod
+    def tearDownClass(cls):
+        """Tear down class method to stop the patcher."""
+        cls.get_patcher.stop()
+
+    @parameterized_class('org_payload, repos_payload, expected_repos, apache2_repos', [
+        (org_payload, repos_payload, expected_repos, apache2_repos),
+    ])
+    def test_public_repos_integration(
+            self,
+            org_payload,
+            repos_payload,
+            expected_repos,
+            apache2_repos):
+        """Integration test for GithubOrgClient.public_repos method."""
+        client = GithubOrgClient('testorg')
+
+        # Test public_repos method
+        repos = client.public_repos()
+
+        # Assertions
+        self.assertEqual(repos, expected_repos)
+        apache2_repos_actual = client.public_repos("apache-2.0")
+        self.assertEqual(apache2_repos_actual, apache2_repos)
