@@ -2,11 +2,11 @@
 """Basic Flask app"""
 
 from flask import Flask, render_template, request
-from flask_babel import Babel
+from flask_babel import Babel, _
 from os import getenv
 
 app = Flask(__name__)
-babel = Babel(app, static_url_path="")
+babel = Babel(app)
 
 
 class Config(object):
