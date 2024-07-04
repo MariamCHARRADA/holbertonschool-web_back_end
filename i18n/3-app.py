@@ -6,14 +6,15 @@ from flask_babel import Babel
 from os import getenv
 
 app = Flask(__name__)
-babel = Babel(app, static_url_path='')
+babel = Babel(app, static_url_path="")
 
 
 class Config(object):
-    """ config module"""
-    LANGUAGES = ['en', 'fr']
-    BABEL_DEFAULT_LOCALE = 'en'
-    BABEL_DEFAULT_TIMEZONE = 'UTC'
+    """config module"""
+
+    LANGUAGES = ["en", "fr"]
+    BABEL_DEFAULT_LOCALE = "en"
+    BABEL_DEFAULT_TIMEZONE = "UTC"
 
 
 app.config.from_object(Config)
@@ -21,8 +22,8 @@ app.config.from_object(Config)
 
 @babel.localeselector
 def get_locale() -> str:
-    """ determines the best match with our supported languages"""
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
+    """determines the best match with our supported languages"""
+    return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 
 @app.route("/", methods=["GET"], strict_slashes=False)
