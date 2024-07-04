@@ -11,7 +11,7 @@ babel = Babel(app)
 @app.route("/")
 def index():
     """renders template"""
-    return render_template("0-index.html")
+    return render_template("1-index.html")
 
 
 class Config:
