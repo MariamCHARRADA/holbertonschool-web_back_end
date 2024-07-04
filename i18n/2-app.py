@@ -6,7 +6,7 @@ from flask_babel import Babel
 from os import getenv
 
 app = Flask(__name__)
-babel = Babel(app, locale_selector=get_locale)
+babel = Babel(app, static_url_path='')
 
 
 class Config(object):
