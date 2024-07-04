@@ -8,7 +8,6 @@ from os import getenv
 app = Flask(__name__)
 babel = Babel(app)
 
-LANGUAGES = ["en", "fr"]
 
 class Config(object):
     """config module"""
@@ -32,7 +31,7 @@ def get_locale() -> str:
     """determines the best lang match """
     if request.args.get("locale"):
         locale = request.args.get("locale")
-        if locale in LANGUAGES:
+        if locale in app.config["LANGUAGES"]:
             return locale
     else:
         return request.accept_languages.best_match(app.config["LANGUAGES"])
