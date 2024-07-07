@@ -8,7 +8,6 @@ from typing import Union
 
 app = Flask(__name__)
 babel = Babel(app)
-
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
     2: {"name": "Beyonce", "locale": "en", "timezone": "US/Central"},
@@ -41,9 +40,12 @@ def get_locale() -> str:
         locale = request.args.get("locale")
         if locale in app.config["LANGUAGES"]:
             return locale
-    elif g.user and g.user.get('locale')\
-        and g.user.get("locale") in app.config["LANGUAGES"]:
-            return g.user.get("locale")
+    elif (
+        g.user
+        and g.user.get("locale")
+        and g.user.get("locale") in app.config["LANGUAGES"]
+    ):
+        return g.user.get("locale")
     else:
         return request.accept_languages.best_match(app.config["LANGUAGES"])
 
