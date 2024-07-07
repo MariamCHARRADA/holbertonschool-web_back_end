@@ -4,6 +4,7 @@
 from flask import Flask, render_template, request, g
 from flask_babel import Babel, _
 from os import getenv
+from typing import Union
 
 app = Flask(__name__)
 babel = Babel(app)
@@ -43,18 +44,20 @@ def get_locale() -> str:
     else:
         return request.accept_languages.best_match(app.config["LANGUAGES"])
 
-@app.before_request
-def before_request():
-    ''' before_request'''
-    g.user = get_user()
 
-def get_user():
+def get_user() -> Union[dict, None]:
     """get user from login_as"""
     if request.args.get("login_as"):
         user = int(request.args.get("login_as"))
         if user in users:
             return users.get(user)
     return None
+
+
+@app.before_request
+def before_request():
+    """before_request"""
+    g.user = get_user()
 
 
 if __name__ == "__main__":
