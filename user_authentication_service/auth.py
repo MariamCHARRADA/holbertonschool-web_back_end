@@ -38,6 +38,6 @@ class Auth:
             return False
         return bcrypt.checkpw(password.encode("utf-8"), user.hashed_password)
 
-    def _generate_uuid(self) -> str:
+    def _generate_uuid() -> str:
         """Generate a new UUID and return its string representation."""
         return str(uuid.uuid4())
