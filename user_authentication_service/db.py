@@ -1,6 +1,6 @@
-#!/usr/bin/env python3
 """DB module
 """
+
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -45,3 +45,18 @@ class DB:
             raise NoResultFound("No user found with the provided criteria.")
         except InvalidRequestError:
             raise InvalidRequestError("Invalid query arguments.")
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """Update a user's attributes"""
+        try:
+            user = self.find_user_by(id=user_id)
+
+            for key, value in kwargs.items():
+                if hasattr(user, key):
+                    setattr(user, key, value)
+                else:
+                    raise ValueError(f"Invalid attribute: {key}")
+
+            self._session.commit()
+        except NoResultFound:
+            raise NoResultFound("No user found with the provided ID.")
