@@ -56,7 +56,7 @@ def logout():
         abort(403)
 
 
-@app.route("/sessions", methods=["GET"])
+@app.route("/profile", methods=["GET"])
 def profile():
     """Return user profile"""
     session_cookie = request.cookies.get("session_id")
