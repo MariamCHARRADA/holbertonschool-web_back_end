@@ -84,15 +84,11 @@ def replay(method: Callable) -> None:
     inputs = f"{key}:inputs"
     outputs = f"{key}:outputs"
     redis_instance = method.__self__._redis
-
     count = redis_instance.get(key).decode("utf-8")
-
     print(f"{key} was called {count} times:")
-
     input_list = redis_instance.lrange(inputs, 0, -1)
     output_list = redis_instance.lrange(outputs, 0, -1)
     redis_zipped = list(zip(input_list, output_list))
-
     for input_args, output_data in redis_zipped:
         args, data = input_args.decode("utf-8"), output_data.decode("utf-8")
         print(f"{key}(*{args}) -> {data}")
